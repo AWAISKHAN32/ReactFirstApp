@@ -4,18 +4,25 @@ import { Image, Text, TextInput, View } from "react-native";
 const Cat = () =>{
   return(
     <View>
-    <Text>I am your Cat </Text>
+    <Text
+          style = {{
+            color:'white',
+            fontSize:20,
+          }}
+          >I am your Cat </Text>
 
     <TextInput 
            style={{
            height: 50,
+           width:150,
            borderColor: 'grey',
            borderWidth:3,
+           color:'white'
     }}
     defaultValue = "Name me!"
     />
     <Image
-         style={{ width: 200, height: 200, borderWidth: 2, borderColor: 'black' }}
+         style={{ width: 150, height: 150, borderWidth: 2, borderColor: 'black' }}
          source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
          resizeMode="cover"  // Try "cover", "stretch", "repeat", "center"
          />

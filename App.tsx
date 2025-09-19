@@ -29,7 +29,14 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <Text>Awais Abdali here!</Text>
+      <Text
+          style={{
+            color:'silver',
+            fontSize:25,
+            fontWeight:18,
+            marginbottom:15,
+          }}
+          >Awais Abdali here!</Text>
       <Cat />
     </View>
   );
