@@ -6,11 +6,12 @@
  */
 
 import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, TextInput, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import Cat from './src/screens/cat';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -28,10 +29,8 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+      <Text>Awais Abdali here!</Text>
+      <Cat />
     </View>
   );
 }
@@ -39,7 +38,16 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems:"center",
+    justifyContent:"center",
+    color:'white',
+    fontSize:203,
+    
+
   },
 });
 
 export default App;
+
+
+
