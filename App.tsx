@@ -54,10 +54,9 @@ function AppContent() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems:"center",
-    justifyContent:"center",
-  },
+    flex:1,
+    alignItems:'center',
+    },
 });
 
 export default App;

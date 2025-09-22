@@ -1,8 +1,10 @@
-import React from "react";
-import { Image, ImageBackground, Modal, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
+import { Image, ImageBackground, Modal, StyleSheet, Switch, Text, TextInput, View } from "react-native";
 
 const image = { uri: 'https://reactnative.dev/img/tiny_logo.png' };
 const Cat = () => {
+  const [isEnable, setOIsEnable]=useState(false);
+  const toggleSwitch =() => setOIsEnable(previousState => !previousState);
   return (
   <View>
       <Text
@@ -23,6 +25,7 @@ const Cat = () => {
         defaultValue="Write Here!"
       />
 
+         
       <Image
         style={styles.imgs}
         source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
@@ -32,6 +35,13 @@ const Cat = () => {
         <Text style={styles.text}>This Text Is For Image BackGround</Text>
       </ImageBackground>
 
+        <Switch 
+        trackColor={{false:'yellow' , true: 'green'}}
+        thumbColor={isEnable ? 'brown' : 'orange'}
+        ios_backgroundColor="pink"
+        onValueChange={toggleSwitch}
+        value={isEnable}
+        />
     </View>
   );
 };
