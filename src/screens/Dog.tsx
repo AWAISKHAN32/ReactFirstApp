@@ -4,18 +4,25 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 const Dog = () =>{
     return(
+        <SafeAreaProvider>
+            <SafeAreaView style={styles.container}>
         <View style={styles.Indicator}>
-    <ActivityIndicator color='blue' size='large' />
-    <Button title ='Press Me' onPress={() =>Alert.alert('Button is Pressed')} 
-        color="gold"/>
+    <ActivityIndicator color='gold' size='large' />
+    <Button title ='Press Me' onPress={() => Alert.alert('Button is Pressed')} 
+        />
         </View>
+        </SafeAreaView>
+        </SafeAreaProvider>
         );
 };
 
 const styles =StyleSheet.create({
-        Indicator: {
-            
-
+    container:{
+flex:1,
+justifyContent:'center'
+    },   
+    Indicator: {
+        
         },
         press:{
          color:'gold'
