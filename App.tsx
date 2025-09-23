@@ -66,10 +66,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-
 import Cat from './src/screens/cat';
 import Dog from './src/screens/dog';
 import Rat from './src/screens/rat';
+import { HeaderShownContext, HeaderTitle } from '@react-navigation/elements';
+
 
 // Define all routes and their params
 type RootStackParamList = {
@@ -98,8 +99,8 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown:false}}>
+          <Stack.Screen name="Home" component={HomeScreen}  />
           <Stack.Screen name="Cat" component={Cat} />
           <Stack.Screen name="Dog" component={Dog} />
           <Stack.Screen name="Rat" component={Rat} />

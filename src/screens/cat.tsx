@@ -63,8 +63,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'gold',
+    
     textAlign: 'center',
     fontSize: 12,
   }
 });
-export default Cat
+export default Cat;
