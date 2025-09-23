@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 const Food=() =>{
+    const [searchValue, setSearchValue] = useState('')
 return(
     <SafeAreaProvider>
     <SafeAreaView>
@@ -23,10 +24,15 @@ return(
               source={{uri:"https://reactnative.dev/img/tiny_logo.png"}} />
             
             <TextInput 
-              defaultValue="Search for resturants and groceries" 
+            style={{width:'80%', }}
+              value={searchValue}
+              onChangeText={setSearchValue}
+              placeholder="Search for restaurants here"
+              placeholderTextColor={'gray'}
                />
          </View>
     </View>
+            
     </>
     </SafeAreaView>
 </SafeAreaProvider>
@@ -40,8 +46,8 @@ const styles=StyleSheet.create({
                padding:12,
              },
               headimg:{
-                width:23,
-                height:23,
+                width:18,
+                height:18,
               },
               v1:{
                 display:'flex',
@@ -61,7 +67,7 @@ const styles=StyleSheet.create({
                    flexDirection:'row',
                    backgroundColor:'white',
                    width:'90%',
-                   borderRadius:12,
+                   borderRadius:22,
                    justifyContent:'space-evenly',
                    alignItems:'center',
                    margin:'auto',
