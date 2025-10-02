@@ -1,67 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
-//  * @format
- */
-
-// import { NewAppScreen } from '@react-native/new-app-screen';
-// import { Image, StatusBar, StyleSheet, Text, TextInput, useColorScheme, View } from 'react-native';
-// import {
-//   SafeAreaProvider,
-//   SafeAreaView,
-//   useSafeAreaInsets,
-// } from 'react-native-safe-area-context';
-// import Cat from './src/screens/cat';
-// import Dog from './src/screens/dog';
-// import Rat from './src/screens/rat'
-
-// function App() {
-//   const isDarkMode = useColorScheme() === 'dark';
-
-//   return (
-//     <SafeAreaProvider>
-//       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-//       <AppContent />
-//     </SafeAreaProvider>
-//   );
-// }
-
-// function AppContent() {
-//   const safeAreaInsets = useSafeAreaInsets();
-
-//   return (
-//     <SafeAreaProvider>
-//       <SafeAreaView style={styles.container}>
-//     <View style={styles.container}>
-//       <Text
-//           style={{
-//             color:'gold',
-//             fontSize:25,
-//             fontWeight:'bold',
-//             marginBottom:15,
-//           }}
-//           >Awais Abdali here!</Text>
-//       <Cat />
-//       <Dog />
-//       <Rat />
-//        </View>
-//       </SafeAreaView>
-//       </SafeAreaProvider>
-   
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex:1,
-//     alignItems:'center',
-//     },
-// });
-
-// export default App;
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View,StyleSheet, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -91,17 +29,33 @@ function HomeScreen({ navigation }: HomeProps) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={{ fontSize: 20, marginBottom: 20 }}>Welcome Awais!</Text>
+      <View style={styles.buttonD}>
       <Button title="Go to Cat"  onPress={() => navigation.navigate('Cat')} />
+        </View>
+        <View style={styles.buttonD}>
       <Button title="Go to Dog"  onPress={() => navigation.navigate('Dog')} />
+        </View>
+        <View style={styles.buttonD}>
       <Button title="Go to Rat"  onPress={() => navigation.navigate('Rat')} />
-      <Button title="Go to Food" onPress={() => navigation.navigate('Food')} />
+        </View>
+        <View style={styles.buttonD}>
+      <Button title="Goto FoodPanda" onPress={() => navigation.navigate('Food')} />
+        </View>
     </View>
   );
 }
+const styles=StyleSheet.create({
+            buttonD:{
+              padding:3,
+              margin:5,
+            }
+
+})
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar backgroundColor='yellow' barStyle='dark-content' translucent={false} />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown:false}}>
           <Stack.Screen name="Home" component={HomeScreen} />
