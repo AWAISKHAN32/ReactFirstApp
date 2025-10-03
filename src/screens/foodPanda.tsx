@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import DataList from "../data/datalist";
@@ -28,11 +28,9 @@ const Food = () => {
 
 
   return (
-
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#e21a70' }}>
-      
-     <>
-     
+<Fragment>
+   <SafeAreaView style={{backgroundColor: '#e21a70' }} />
+    <SafeAreaView >
         <View style={styles.mainhead}>
           <View style={styles.v1}>
             <View style={styles.v2}>
@@ -57,6 +55,7 @@ const Food = () => {
         </View >
 
         <FlatList
+             contentContainerStyle={{ paddingBottom: '40%' }}
           style={styles.flat3}
           ListHeaderComponent={() =>
             <View >
@@ -137,8 +136,9 @@ const Food = () => {
             </View>
           )}
         />
-      </>
+    
     </SafeAreaView>
+    </Fragment>
   );
 };
 export default Food;
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e21a70',
     // padding: 12,
     paddingBottom: 38,
+    marginTop:'-15%'
   },
   headimg: {
     width: 18,
@@ -248,8 +249,9 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   flat3: {
-    paddingBottom: 100,
-    paddingHorizontal: 20,
+    // height:'100%',
+    marginTop:'-3%',
+    paddingHorizontal:'5%',
     backgroundColor: 'white',
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18
