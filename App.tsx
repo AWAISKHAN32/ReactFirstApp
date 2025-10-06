@@ -32,16 +32,17 @@ export default function App() {
     <GestureHandlerRootView>
       
       <NavigationContainer>
-        <View style={{flex:1,backgroundColor:'white'}}>
+        <View style={{flex:1}}>
         <Tab.Navigator screenOptions={{headerShown: false,
           tabBarStyle:{
-            borderBlockColor:'light-grey',
-            borderRadius:50,
-            backgroundColor:'red',
-            marginBottom:18,
-            width:'100%',
-            height:'6%'
-          }
+            position:'absolute',
+            bottom:18,
+            marginHorizontal:20,
+            borderRadius:35,
+            borderColor:'red',
+            borderWidth:1,
+            elevation:0,
+          },
         }}
           >
           <Tab.Screen name="Food" component={Food} 

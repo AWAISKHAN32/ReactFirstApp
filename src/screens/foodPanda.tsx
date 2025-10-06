@@ -7,7 +7,7 @@ const Food = () => {
   const [searchValue, setSearchValue] = useState('');
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  const DATA = [
+  const [data, setdata] = useState([
     { id: '1', name: 'offer', image: require('../assets/image1.jpg') },
     { id: '2', name: 'Nice Resturant', image: require('../assets/image2.jpg') },
     { id: '3', name: 'food', image: require('../assets/image3.jpg') },
@@ -24,8 +24,26 @@ const Food = () => {
     { id: '14', name: 'Nestep', image: require('../assets/image14.jpg') },
     { id: '50', name: 'Orange', image: require('../assets/image15.jpg') },
     { id: '16', name: 'Pineaplle', image: require('../assets/image16.jpg') },
-  ]
+  ])
 
+ const [filteredData, setFilteredData] = useState(data);
+ const [restaurantData, setRestaurantData] = useState(DataList);
+ const handleSearch = (text: string) => {
+    setSearchValue(text);
+    if (text === '') {
+      setFilteredData(data);
+       setRestaurantData(restaurantData);
+    } else {
+      const newData = data.filter(item =>
+        item.name.toLowerCase().includes(text.toLowerCase())
+      );
+      const newRestaurantData = restaurantData.filter(item =>
+      item.heading.toLowerCase().includes(text.toLowerCase())
+    );
+      setFilteredData(newData);
+       setRestaurantData(restaurantData);
+    }
+  };
 
   return (
 <Fragment>
@@ -43,19 +61,20 @@ const Food = () => {
             <FontAwesome5 name="opencart" size={20} color='white' />
           </View>
           <View style={styles.v3}>
-            <FontAwesome5 name='search' size={18} color='grey' />
+            <FontAwesome5 name='search' size={18} color='grey'  style={{ marginRight: 8}}/>
             <TextInput
-              style={{ width: '80%', }}
+             
+                style={{ flex:1, paddingVertical: 10, paddingHorizontal: 10, color:'black' }}
               value={searchValue}
-              onChangeText={setSearchValue}
-              placeholder="Search for restaurants here"
+              onChangeText={handleSearch}
+              placeholder="Search for Restaurants and Groceries"
               placeholderTextColor={'gray'}
             />
           </View>
         </View >
 
         <FlatList
-             contentContainerStyle={{ paddingBottom: '40%' }}
+             contentContainerStyle={{ paddingBottom: '62%' }}
           style={styles.flat3}
           ListHeaderComponent={() =>
             <View >
@@ -64,7 +83,7 @@ const Food = () => {
                   <View>
                     <FlatList style={styles.Flat1}
                       horizontal
-                      data={DATA}
+                      data={filteredData}
                       keyExtractor={(item) => item.id}
                       renderItem={({ item }) => (
                         <View style={styles.imgText}>
@@ -81,7 +100,7 @@ const Food = () => {
                   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <FlatList style={styles.Flat2}
                       horizontal
-                      data={DATA}
+                      data={filteredData}
                       keyExtractor={(item) => item.id}
                       renderItem={({ item }) => (
                         <View style={styles.imgText}>
@@ -115,7 +134,7 @@ const Food = () => {
 
             </View>
           }
-          data={DataList}
+          data={restaurantData}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View>
@@ -173,15 +192,15 @@ const styles = StyleSheet.create({
     paddingLeft: 8
   },
   v3: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    width: '95%',
-    borderRadius: 22,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    margin: 'auto',
-  },
+  flexDirection: 'row',
+  backgroundColor: 'white',
+  width: '95%',
+  borderRadius: 25,
+  justifyContent: 'flex-start', // important
+  alignItems: 'center',
+  alignSelf: 'center',
+  paddingHorizontal: 15, // give some breathing room
+},
   t1: {
     fontSize: 18,
     fontWeight: '600',
