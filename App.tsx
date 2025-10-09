@@ -12,6 +12,7 @@ import { forceTouchHandlerName } from 'react-native-gesture-handler/lib/typescri
 import Food from './src/screens/foodPanda';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
 // // Define all routes and their params
@@ -24,15 +25,10 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 // };
 
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
-
-
-export default function App() {
+function TabNavigator() {
   return (
-    <GestureHandlerRootView>
-      
-      <NavigationContainer>
-        <View style={{flex:1}}>
         <Tab.Navigator screenOptions={{headerShown: false,
           tabBarStyle:{
             position:'absolute',
@@ -83,11 +79,28 @@ export default function App() {
           />
 
         </Tab.Navigator>
-      </View>
-      </NavigationContainer>
-    
-    </GestureHandlerRootView>
   );
 }
 
+const DrawerNavigator = () => {
+  return(
+      <Drawer.Navigator>
+         <Drawer.Screen name="Home" component={TabNavigator}/>
+        <Drawer.Screen name="Food" component={Food}/>
+        <Drawer.Screen name="Cat" component={Cat} />
+        <Drawer.Screen name="Dog" component={Dog} />
+        <Drawer.Screen name="Rat" component={Rat} />
+      </Drawer.Navigator>
+  );
+}
 
+export default function App() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <DrawerNavigator />
+        
+      </NavigationContainer>
+    </GestureHandlerRootView>
+  );
+}

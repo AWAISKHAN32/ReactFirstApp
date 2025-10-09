@@ -4,8 +4,6 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import DataList from "../data/datalist";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const Food = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const [data, setdata] = useState([
     { id: '1', name: 'offer', image: require('../assets/image1.jpg') },
@@ -25,30 +23,33 @@ const Food = () => {
     { id: '50', name: 'Orange', image: require('../assets/image15.jpg') },
     { id: '16', name: 'Pineaplle', image: require('../assets/image16.jpg') },
   ])
+  
+  const [searchValue, setSearchValue] = useState('');
+  const [filteredData, setFilteredData] = useState(data);
+  const [restaurantData, setRestaurantData] = useState(DataList);
 
- const [filteredData, setFilteredData] = useState(data);
- const [restaurantData, setRestaurantData] = useState(DataList);
- const handleSearch = (text: string) => {
+
+  const handleSearch = (text: string) => {
     setSearchValue(text);
     if (text === '') {
       setFilteredData(data);
-       setRestaurantData(restaurantData);
+      setRestaurantData(DataList);
     } else {
       const newData = data.filter(item =>
         item.name.toLowerCase().includes(text.toLowerCase())
       );
-      const newRestaurantData = restaurantData.filter(item =>
-      item.heading.toLowerCase().includes(text.toLowerCase())
-    );
+      const newRestaurantData = DataList.filter(item =>
+        item.heading.toLowerCase().includes(text.toLowerCase())
+      );
       setFilteredData(newData);
-       setRestaurantData(restaurantData);
+      setRestaurantData(newRestaurantData);
     }
   };
 
   return (
-<Fragment>
-   <SafeAreaView style={{backgroundColor: '#e21a70' }} />
-    <SafeAreaView >
+    <Fragment>
+      <SafeAreaView style={{ backgroundColor: '#e21a70' }} />
+      <SafeAreaView >
         <View style={styles.mainhead}>
           <View style={styles.v1}>
             <View style={styles.v2}>
@@ -61,10 +62,10 @@ const Food = () => {
             <FontAwesome5 name="opencart" size={20} color='white' />
           </View>
           <View style={styles.v3}>
-            <FontAwesome5 name='search' size={18} color='grey'  style={{ marginRight: 8}}/>
+            <FontAwesome5 name='search' size={18} color='grey' style={{ marginRight: 8 }} />
             <TextInput
-             
-                style={{ flex:1, paddingVertical: 10, paddingHorizontal: 10, color:'black' }}
+
+              style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 10, color: 'black' }}
               value={searchValue}
               onChangeText={handleSearch}
               placeholder="Search for Restaurants and Groceries"
@@ -74,7 +75,13 @@ const Food = () => {
         </View >
 
         <FlatList
-             contentContainerStyle={{ paddingBottom: '62%' }}
+         ListEmptyComponent={() => 
+         
+          <Text style={{textAlign:'center',fontSize:16,fontWeight:'500',color:'grey'}}>
+             No Item Found <FontAwesome5 name="times" size={16} color="grey" /> 
+          </Text>
+         }
+          contentContainerStyle={{ paddingBottom: '62%' }}
           style={styles.flat3}
           ListHeaderComponent={() =>
             <View >
@@ -97,33 +104,39 @@ const Food = () => {
                   </View>
                 </View>
                 <View style={styles.itemContain}>
-                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <View style={{ flex: 1 }}>
                     <FlatList style={styles.Flat2}
                       horizontal
                       data={filteredData}
                       keyExtractor={(item) => item.id}
                       renderItem={({ item }) => (
                         <View style={styles.imgText}>
-                          <Pressable
-                            onPressIn={() => setHoveredId(item.id)}
-                            onPressOut={() => setHoveredId(null)}
-                            >
-                            <Image
-                              source={item.image}
-                              style={[styles.flatImgs2,
-                               hoveredId === item.id && styles.hoveredImg
-                               ]}
+                          <Pressable>
+                            {({ pressed }) => (  
+                              <View style={{ alignItems: 'center', transform: [{ scale: pressed ? 0.8 : 1 }] }}>
+                                <Image
+                                  source={item.image}
+                                  style={[
+                                    styles.flatImgs2,
+                                    {
+                                      borderWidth: pressed ? 3 : 0,
+                                      borderColor: pressed ? 'rgba(220, 7, 89, 0.73)' : 'transparent',
+                                    },
+                                  ]}
                                 />
-                            <Text style={[
-                              styles.t4, hoveredId === item.id && styles.hoveredText
-                              ]}
-                              >
-                                {item.name}
+                                <Text
+                                  style={[
+                                    styles.t4,
+                                    pressed && { fontWeight: '600', color: '#000' },
+                                  ]}
+                                >
+                                  {item.name}
                                 </Text>
+                              </View>
+                            )}
                           </Pressable>
                         </View>
                       )}
-                      extraData={hoveredId}
                     />
                   </View>
                 </View>
@@ -154,9 +167,10 @@ const Food = () => {
                 : null}
             </View>
           )}
+        
         />
-    
-    </SafeAreaView>
+
+      </SafeAreaView>
     </Fragment>
   );
 };
@@ -167,7 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e21a70',
     // padding: 12,
     paddingBottom: 38,
-    marginTop:'-15%'
+    marginTop: '-15%'
   },
   headimg: {
     width: 18,
@@ -192,15 +206,15 @@ const styles = StyleSheet.create({
     paddingLeft: 8
   },
   v3: {
-  flexDirection: 'row',
-  backgroundColor: 'white',
-  width: '95%',
-  borderRadius: 25,
-  justifyContent: 'flex-start', // important
-  alignItems: 'center',
-  alignSelf: 'center',
-  paddingHorizontal: 15, // give some breathing room
-},
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    width: '95%',
+    borderRadius: 25,
+    justifyContent: 'flex-start', // important
+    alignItems: 'center',
+    alignSelf: 'center',
+    paddingHorizontal: 15, // give some breathing room
+  },
   t1: {
     fontSize: 18,
     fontWeight: '600',
@@ -269,8 +283,8 @@ const styles = StyleSheet.create({
   },
   flat3: {
     // height:'100%',
-    marginTop:'-3%',
-    paddingHorizontal:'5%',
+    marginTop: '-3%',
+    paddingHorizontal: '5%',
     backgroundColor: 'white',
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18
