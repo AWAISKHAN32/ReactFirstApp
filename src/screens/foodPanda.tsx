@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from "react-native";
+import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import DataList from "../data/datalist";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { DrawerActions, useNavigation } from "@react-navigation/native";
+
 const Food = () => {
 
   const [data, setdata] = useState([
@@ -23,11 +25,11 @@ const Food = () => {
     { id: '50', name: 'Orange', image: require('../assets/image15.jpg') },
     { id: '16', name: 'Pineaplle', image: require('../assets/image16.jpg') },
   ])
-  
+
   const [searchValue, setSearchValue] = useState('');
   const [filteredData, setFilteredData] = useState(data);
   const [restaurantData, setRestaurantData] = useState(DataList);
-
+const navigation: any = useNavigation();
 
   const handleSearch = (text: string) => {
     setSearchValue(text);
@@ -45,7 +47,8 @@ const Food = () => {
       setRestaurantData(newRestaurantData);
     }
   };
-
+  // Custome icon for drawwr navigation.
+  
   return (
     <Fragment>
       <SafeAreaView style={{ backgroundColor: '#e21a70' }} />
@@ -53,6 +56,22 @@ const Food = () => {
         <View style={styles.mainhead}>
           <View style={styles.v1}>
             <View style={styles.v2}>
+              <TouchableOpacity
+                onPress={() => {
+                  // Safely open drawer from nested navigator
+                  const parent = navigation.getParent();
+                  if (parent && parent.openDrawer) {
+                    parent.openDrawer();
+                  } else {
+                    navigation.dispatch(DrawerActions.openDrawer());
+                  }
+                }}
+                style={{ paddingRight: 8 }}
+                activeOpacity={0.5}
+              >
+                <FontAwesome5 name="bars" size={22} color="white"  />
+              </TouchableOpacity>
+
               <FontAwesome5 name='map-marker-alt' size={20} color='white' />
               <View style={styles.Gviewtext}>
                 <Text style={styles.t1}>65 Ghalib Road </Text>
@@ -75,12 +94,12 @@ const Food = () => {
         </View >
 
         <FlatList
-         ListEmptyComponent={() => 
-         
-          <Text style={{textAlign:'center',fontSize:16,fontWeight:'500',color:'grey'}}>
-             No Item Found <FontAwesome5 name="times" size={16} color="grey" /> 
-          </Text>
-         }
+          ListEmptyComponent={() =>
+
+            <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: '500', color: 'grey' }}>
+              No Item Found <FontAwesome5 name="times" size={16} color="grey" />
+            </Text>
+          }
           contentContainerStyle={{ paddingBottom: '62%' }}
           style={styles.flat3}
           ListHeaderComponent={() =>
@@ -112,7 +131,7 @@ const Food = () => {
                       renderItem={({ item }) => (
                         <View style={styles.imgText}>
                           <Pressable>
-                            {({ pressed }) => (  
+                            {({ pressed }) => (
                               <View style={{ alignItems: 'center', transform: [{ scale: pressed ? 0.8 : 1 }] }}>
                                 <Image
                                   source={item.image}
@@ -167,7 +186,7 @@ const Food = () => {
                 : null}
             </View>
           )}
-        
+
         />
 
       </SafeAreaView>

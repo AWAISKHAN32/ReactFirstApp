@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Image, ImageBackground, Modal, StyleSheet, Switch, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const image = { uri: 'https://reactnative.dev/img/tiny_logo.png' };
 const Cat = () => {
   const [isEnable, setOIsEnable]=useState(false);
   const toggleSwitch =() => setOIsEnable(previousState => !previousState);
   return (
-  <View>
+  <SafeAreaView>
+    <View style={{margin:'auto'}}>
       <Text
         style={{
-          color: 'white',
+          color: 'gold',
           fontSize: 20,
+          backgroundColor:'grey'
         }}
       >I am your Cat </Text>
 
@@ -43,6 +46,7 @@ const Cat = () => {
         value={isEnable}
         />
     </View>
+  </SafeAreaView>
   );
 };
 
