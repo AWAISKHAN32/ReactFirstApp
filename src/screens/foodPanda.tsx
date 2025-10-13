@@ -132,7 +132,7 @@ const navigation: any = useNavigation();
                         <View style={styles.imgText}>
                           <Pressable>
                             {({ pressed }) => (
-                              <View style={{ alignItems: 'center', transform: [{ scale: pressed ? 0.8 : 1 }] }}>
+                              <View style={{ alignItems: 'center', transform: [{ scale: pressed ? 1 : 1 }] }}>
                                 <Image
                                   source={item.image}
                                   style={[
