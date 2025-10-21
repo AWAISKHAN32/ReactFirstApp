@@ -295,7 +295,6 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   t4: {
-
     paddingTop: 12,
     maxWidth: 70,
     textAlign: 'center'

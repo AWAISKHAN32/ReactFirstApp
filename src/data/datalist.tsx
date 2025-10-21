@@ -1,6 +1,7 @@
 const DataList = [
   {
     id: '1',
+    name:'Item-1',
     image: require('../assets/image1.jpg'),
     heading: 'Spicy Biryani',
     price:234,
@@ -15,6 +16,7 @@ const DataList = [
   },
   {
     id: '2',
+     name:'Item-2',
     image: require('../assets/image2.jpg'),
     heading: 'Zinger Burger',
     price:254,
@@ -29,6 +31,7 @@ const DataList = [
   },
   {
     id: '3',
+     name:'Item-3',
     image: require('../assets/image3.jpg'),
     heading: 'Chicken Karahi',
     price:294,
@@ -43,6 +46,7 @@ const DataList = [
   },
   {
     id: '4',
+     name:'Item-4',
     image: require('../assets/image4.jpg'),
     heading: 'Beef Steak',
     price:334,
@@ -57,6 +61,7 @@ const DataList = [
   },
   {
     id: '5',
+     name:'Item-5',
     image: require('../assets/image5.jpg'),
     heading: 'Pizza Margherita',
     price:244,
@@ -71,6 +76,7 @@ const DataList = [
   },
   {
     id: '6',
+     name:'Item-6',
     image: require('../assets/image6.jpg'),
     heading: 'Grilled Sandwich',
     price:239,
@@ -85,6 +91,7 @@ const DataList = [
   },
   {
     id: '7',
+     name:'Item-7',
     image: require('../assets/image7.jpg'),
     heading: 'Paratha Roll',
     price:324,
@@ -99,6 +106,7 @@ const DataList = [
   },
   {
     id: '8',
+     name:'Item-8',
     image: require('../assets/image8.jpg'),
     heading: 'Fish Fry',
     price:274,
@@ -113,6 +121,7 @@ const DataList = [
   },
   {
     id: '9',
+     name:'Item-9',
     image: require('../assets/image9.jpg'),
     heading: 'Mutton Pulao',
     price:534,
@@ -127,6 +136,7 @@ const DataList = [
   },
   {
     id: '10',
+     name:'Item-10',
     image: require('../assets/image10.jpg'),
     heading: 'Chicken Nuggets',
     price:424,
@@ -141,6 +151,7 @@ const DataList = [
   },
   {
     id: '11',
+     name:'Item-11',
     image: require('../assets/image11.jpg'),
     heading: 'Chapli Kebab',
     price:134,
@@ -155,6 +166,7 @@ const DataList = [
   },
   {
     id: '12',
+     name:'Item-12',
     image: require('../assets/image12.jpg'),
     heading: 'Chicken Shawarma',
     price:254,
@@ -169,6 +181,7 @@ const DataList = [
   },
   {
     id: '13',
+     name:'Item-13',
     image: require('../assets/image13.jpg'),
     heading: 'Fried Chicken',
     price:634,
@@ -183,6 +196,7 @@ const DataList = [
   },
   {
     id: '14',
+     name:'Item-14',
     image: require('../assets/image14.jpg'),
     heading: 'Vegetable Curry',
     price:214,
@@ -197,6 +211,7 @@ const DataList = [
   },
   {
     id: '15',
+     name:'Item-15',
     image: require('../assets/image15.jpg'),
     heading: 'Ice Cream Sundae',
     price:934,
@@ -211,6 +226,7 @@ const DataList = [
   },
   {
     id: '16',
+     name:'Item-16',
     image: require('../assets/image16.jpg'),
     heading: 'Hot & Sour Soup',
     price:204,
@@ -225,6 +241,7 @@ const DataList = [
   },
   {
     id: '17',
+     name:'Item-17',
     image: require('../assets/image17.jpg'),
     heading: 'Pasta Alfredo',
     price:2074,
@@ -239,6 +256,7 @@ const DataList = [
   },
   {
     id: '18',
+     name:'Item-18',
     image: require('../assets/image18.jpg'),
     heading: 'Seekh Kebab',
     price:2042,
@@ -253,6 +271,7 @@ const DataList = [
   },
   {
     id: '19',
+    name:'item-19',
     image: require('../assets/image19.jpg'),
     heading: 'Chicken Malai Tikka',
     price:2034,
@@ -267,6 +286,7 @@ const DataList = [
   },
   {
     id: '20',
+     name:'Item-20',
     image: require('../assets/image20.jpg'),
     heading: 'French Fries',
     price:2441,
