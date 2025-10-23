@@ -26,7 +26,7 @@ const DataList = [
     country: 'Pakistan',
     discount: null,
     riderPrice: 200,
-    rating: 4.7,
+    rating: 4,
     reviews: 399,
   },
   {
@@ -41,7 +41,7 @@ const DataList = [
     country: 'Pakistan',
     discount: '15%',
     riderPrice: 450,
-    rating: 4.8,
+    rating: 3.5,
     reviews: 350,
   },
   {
@@ -56,7 +56,7 @@ const DataList = [
     country: 'Pakistan',
     discount: null,
     riderPrice: 650,
-    rating: 4.6,
+    rating: 3,
     reviews: 280,
   },
   {
@@ -91,7 +91,7 @@ const DataList = [
   },
   {
     id: '7',
-     name:'Item-7',
+    name:'Item-7',
     image: require('../assets/image7.jpg'),
     heading: 'Paratha Roll',
     price:324,
@@ -101,7 +101,7 @@ const DataList = [
     country: 'Pakistan',
     discount: '15%',
     riderPrice: 180,
-    rating: 4.7,
+    rating: 4,
     reviews: 220,
   },
   {

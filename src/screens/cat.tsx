@@ -14,6 +14,7 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import RatingStars from "../components/fetchStars";
 import DataList from "../data/datalist";
+import { useRoute } from "@react-navigation/native";
 
 // 🔹 Reusable Search + Category component
 const SearchAndCategories = ({
@@ -111,6 +112,9 @@ const Cat = () => {
   const [isSticky, setIsSticky] = useState(false);
   const scrollY = useRef(new Animated.Value(0)).current;
 
+  const route = useRoute();
+const { item } = route.params || {};
+
   const searchContent = (value: string) => {
     setSearchValue(value);
     if (value === "") {
@@ -140,7 +144,7 @@ const Cat = () => {
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle={"light-content"}
+        barStyle={"dark-content"}
       />
 
       {/* ✅ Single Sticky Section */}
@@ -182,18 +186,18 @@ const Cat = () => {
             {/* 🔹 Header Image */}
             <View style={styles.headerImageContainer}>
               <Image
-                source={require("../assets/image5.jpg")}
+                source={item?.image || require("../assets/image5.jpg")}
                 style={styles.headerImage}
               />
 
               <View style={styles.headerContent}>
-                <Text style={styles.headerTitle}>Hello Your Food</Text>
+                <Text style={styles.headerTitle}> {item?.heading || "Your Food"}</Text>
                 <View style={styles.headerRating}>
                   <Text>
-                    {" "}
-                    <RatingStars rating={4.5} />{" "}
+                    
+                     <RatingStars rating={item?.rating || 4.5} />
                   </Text>
-                  <Text style={{ fontWeight: "600" }}> 3.8(300+rating)</Text>
+                  <Text style={{ fontWeight: "600" }}>   {item?.rating ? `${item.rating} (${item.reviews}+) `  : "3.8 (300+ ratings)"}</Text>
                 </View>
               </View>
             </View>

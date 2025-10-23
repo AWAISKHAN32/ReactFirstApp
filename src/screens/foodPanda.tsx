@@ -4,12 +4,13 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import DataList from "../data/datalist";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { DrawerActions, useNavigation } from "@react-navigation/native";
+import Cat from "./cat";
 
 const Food = () => {
 
   const [data, setdata] = useState([
     { id: '1', name: 'offer', image: require('../assets/image1.jpg') },
-    { id: '2', name: 'Nice Resturant', image: require('../assets/image2.jpg') },
+    { id: '2', name: 'Full Platter', image: require('../assets/image2.jpg') },
     { id: '3', name: 'food', image: require('../assets/image3.jpg') },
     { id: '4', name: 'ittem', image: require('../assets/image4.jpg') },
     { id: '5', name: 'slogan', image: require('../assets/image5.jpg') },
@@ -48,7 +49,7 @@ const navigation: any = useNavigation();
     }
   };
   // Custome icon for drawwr navigation.
-  
+
   return (
     <Fragment>
       <SafeAreaView style={{ backgroundColor: '#e21a70' }} />
@@ -132,7 +133,7 @@ const navigation: any = useNavigation();
                         <View style={styles.imgText}>
                           <Pressable>
                             {({ pressed }) => (
-                              <View style={{ alignItems: 'center', transform: [{ scale: pressed ? 1 : 1 }] }}>
+                              <View style={{transform: [{ scale: pressed ? 1 : 1 }] }}>
                                 <Image
                                   source={item.image}
                                   style={[
@@ -170,7 +171,10 @@ const navigation: any = useNavigation();
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View>
+              <Pressable
+                onPress={() => navigation.navigate('Cat', { item })}>
               <Image source={item.image} style={styles.Flat3Img} />
+             
               <View style={styles.rateHead}>
                 <Text style={styles.t4all}>{item.heading}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -184,6 +188,8 @@ const navigation: any = useNavigation();
               {item.discount ?
                 (<Text style={styles.discount}>Up to {item.discount} off</Text>)
                 : null}
+ </Pressable>
+
             </View>
           )}
 
