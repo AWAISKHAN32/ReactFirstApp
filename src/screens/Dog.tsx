@@ -11,10 +11,21 @@ const Dog = () => {
   const navigation: any = useNavigation();
   const [searchValue, setSearchValue] = useState('');
   const [showAll, setShowAll] = useState(false);
-
+   const [restaurantData, setRestaurantData] = useState(DataList);
+ const searchContent = (value: string) => {
+    setSearchValue(value);
+    if (value === "") {
+      setRestaurantData(DataList);
+    } else {
+      const newRestaurantData = DataList.filter((item) =>
+        item.heading.toLowerCase().includes(value.toLowerCase())
+      );
+      setRestaurantData(newRestaurantData);
+    }
+  };
 // Only show 4 items if not expanded
-  const visibleData = showAll ? DataList : DataList.slice(0, 4);
-  const remainingCount = DataList.length - visibleData.length;
+  const visibleData = showAll ? restaurantData : restaurantData.slice(0, 4);
+  const remainingCount = restaurantData.length - visibleData.length;
   return (
     <Fragment>
       <SafeAreaView style={{ backgroundColor: '#e21a70' }} />
@@ -53,7 +64,7 @@ const Dog = () => {
               <TextInput
                 style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 10, color: 'black' }}
                 value={searchValue}
-                onChangeText={setSearchValue}
+                onChangeText={searchContent}
                 placeholder="Search for Restaurants and Groceries"
                 placeholderTextColor={'gray'}
               />
@@ -70,17 +81,17 @@ const Dog = () => {
             <View>
               <FlatList
                 horizontal
-                data={DataList}
+                data={restaurantData}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <View style={styles.imgText}>
                     <Image
                       source={item.image}
                       style={styles.flatImgs1} />
-                    <Text style={styles.t3}>{item.name}</Text>
+                    <Text style={styles.t3}>{item.heading}</Text>
                   </View>
                 )}
-                 scrollEnabled={false}
+                //  scrollEnabled={false}
               />
             </View>
           </View>
@@ -91,18 +102,18 @@ const Dog = () => {
               <Text style={{ color: 'black', fontSize: 20, fontWeight: 'bold', paddingHorizontal: 12, paddingVertical: 12 }}>Popular</Text>
               <FlatList
                 horizontal
-                data={DataList}
+                data={restaurantData}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <View style={styles.imgText}>
                     <Image
                       source={item.image}
                       style={styles.flatImgs1} />
-                    <Text style={styles.t3}>{item.name}</Text>
+                    <Text style={styles.t3}>{item.heading}</Text>
                     <Text style={{ color: 'grey', fontWeight: 'bold' }}>{item.minTime}-{item.maxTime}</Text>
                   </View>
                 )}
-                 scrollEnabled={false}
+                //  scrollEnabled={false}
               />
             </View>
           </View>
@@ -115,7 +126,7 @@ const Dog = () => {
               ListHeaderComponent={
                 <Text style={{ color: 'black', fontSize: 20, fontWeight: 'bold', paddingHorizontal: 12, paddingVertical: 12 }}>Popular</Text>
               }
-                data={visibleData}
+              data={visibleData}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                   <View style={styles.flat3item}>
@@ -227,13 +238,13 @@ const styles = StyleSheet.create({
   flat1: {
     // backgroundColor: 'red',
     // paddingVertical:4,
-    paddingHorizontal: 4,
+    paddingHorizontal: 2,
 
   },
   flat2: {
     // backgroundColor: 'green',
     // paddingTop:8,
-    paddingHorizontal: 4,
+    paddingHorizontal: 2,
   },
   flat3: {
     paddingHorizontal: 12,
@@ -284,7 +295,7 @@ const styles = StyleSheet.create({
   imgText: {
     flex: 1,
     alignItems: 'center',
-    padding: 6,
+    padding: 4,
 
   },
 

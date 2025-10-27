@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   Animated,
+  Pressable,
 } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -16,7 +17,27 @@ import RatingStars from "../components/fetchStars";
 import DataList from "../data/datalist";
 import { useRoute } from "@react-navigation/native";
 
+// define item shape
+type CategoryItem = {
+  id: string | number;
+  heading?: string;
+  image?: any;
+  price?: number;
+  rating?: number;
+  reviews?: number;
+  [key: string]: any;
+};
+
 // 🔹 Reusable Search + Category component
+type SearchAndCategoriesProps = {
+  sticky?: boolean;
+  searchValue: string;
+  searchContent: (value: string) => void;
+  restaurantData: CategoryItem[];
+  selectedCategory: string;
+  setSelectedCategory: (value: string) => void;
+};
+
 const SearchAndCategories = ({
   sticky = false,
   searchValue,
@@ -24,104 +45,125 @@ const SearchAndCategories = ({
   restaurantData,
   selectedCategory,
   setSelectedCategory,
+}: SearchAndCategoriesProps) => {
+  
+  // 🔹 Create categories with "All" option
+  const categories = [
+    { id: "all", heading: "All" },
+    ...restaurantData
+  ];
 
-}:{
-  sticky?: boolean;
-  searchValue: string;
-  searchContent:(value: string) => void;
-  onSearchChange: (value: string) => void;
-  restaurantData: any[];
-  selectedCategory: string;
-   setSelectedCategory:(value: string) => void;
-  onCategorySelect: (value: string) => void;
-}) => (
-  <View
-    style={[sticky ? styles.stickySearchSection : styles.normalSearchSection]}
-  >
-    <View style={styles.inputtext}>
-      <FontAwesome
-        name="search"
-        size={20}
-        color={"grey"}
-        style={{ marginLeft: -12 }}
-      />
-      <TextInput
-        style={{ width: "80%", color: "black", paddingHorizontal: 18 }}
-        placeholder="Search here"
-        placeholderTextColor={"grey"}
-        value={searchValue}
-        onChangeText={searchContent}
+  return (
+    <View
+      style={[sticky ? styles.stickySearchSection : styles.normalSearchSection]}
+    >
+      <View style={styles.inputtext}>
+        <FontAwesome
+          name="search"
+          size={20}
+          color={"grey"}
+          style={{ marginLeft: -12 }}
+        />
+        <TextInput
+          style={{ width: "80%", color: "black", paddingHorizontal: 18 }}
+          placeholder="Search here"
+          placeholderTextColor={"grey"}
+          value={searchValue}
+          onChangeText={searchContent}
+        />
+      </View>
+
+      <FlatList
+        horizontal
+        data={categories}
+        keyExtractor={(item) => item.id.toString()}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          borderBottomColor: "black",
+          borderBottomWidth: 1,
+        }}
+        ListEmptyComponent={() => (
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 16,
+              fontWeight: "500",
+              color: "grey",
+            }}
+          >
+            No Item Found <FontAwesome5Icon name="times" size={16} color="grey" />
+          </Text>
+        )}
+        renderItem={({ item }) => {
+          const isActive = selectedCategory === (item.heading || "");
+          return (
+            <TouchableOpacity
+              onPress={() => setSelectedCategory(item.heading || "")}
+              style={[
+                {
+                  paddingHorizontal: 10,
+                  borderBottomWidth: isActive ? 3 : 0,
+                  borderColor: isActive ? "#0d0308ff" : "transparent",
+                },
+              ]}
+            >
+              <Text
+                style={{
+                  color: isActive ? "black" : "#858282ff",
+                  fontWeight: isActive ? "700" : "500",
+                }}
+              >
+                {item.heading}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+        style={{ marginTop: 12, height: 30 }}
       />
     </View>
-
-    <FlatList
-      horizontal
-      data={restaurantData}
-      keyExtractor={(item) => item.id}
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{
-        borderBottomColor: "black",
-        borderBottomWidth: 1,
-      }}
-      ListEmptyComponent={() => (
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 16,
-            fontWeight: "500",
-            color: "grey",
-          }}
-        >
-          No Item Found <FontAwesome5Icon name="times" size={16} color="grey" />
-        </Text>
-      )}
-      renderItem={({ item }) => {
-        const isActive = selectedCategory === item.heading;
-        return (
-          <TouchableOpacity
-            onPress={() => setSelectedCategory(item.heading)}
-            style={[
-              {
-                paddingHorizontal: 10,
-                borderBottomWidth: isActive ? 3 : 0,
-                borderColor: isActive ? "#0d0308ff" : "",
-              },
-            ]}
-          >
-            <Text
-              style={{
-                color: isActive ? "black" : "#858282ff",
-                fontWeight: isActive ? "700" : "500",
-              }}
-            >
-              {item.heading}
-            </Text>
-          </TouchableOpacity>
-        );
-      }}
-      style={{ marginTop: 12, height: 30 }}
-    />
-  </View>
-);
+  );
+};
 
 const Cat = () => {
   const [orderType, setOrderType] = useState("delivery");
   const [searchValue, setSearchValue] = useState("");
-  const [restaurantData, setRestaurantData] = useState(DataList);
+  const [restaurantData, setRestaurantData] = useState<CategoryItem[]>(
+    DataList as CategoryItem[]
+  );
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [isSticky, setIsSticky] = useState(false);
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const route = useRoute();
-const { item } = route.params || {};
+  const { item } = (route.params || {}) as { item?: Partial<CategoryItem> };
+
+  // 🔹 Filter data based on selected category
+  const filteredData = restaurantData.filter(item => {
+    if (selectedCategory === "All") return true;
+    return item.heading === selectedCategory;
+  });
+
+  // 🔹 Updated category selection handler
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    
+    if (category === "All") {
+      setRestaurantData(DataList as CategoryItem[]);
+    } else {
+      const filtered = (DataList as CategoryItem[]).filter(
+        item => item.heading === category
+      );
+      setRestaurantData(filtered);
+    }
+  };
 
   const searchContent = (value: string) => {
     setSearchValue(value);
     if (value === "") {
-      setRestaurantData(DataList);
+      setRestaurantData(DataList as CategoryItem[]);
     } else {
-      const newRestaurantData = DataList.filter((item) =>
-        item.heading.toLowerCase().includes(value.toLowerCase())
+      const newRestaurantData = (DataList as CategoryItem[]).filter((it) =>
+        (it.heading || "").toLowerCase().includes(value.toLowerCase())
       );
       setRestaurantData(newRestaurantData);
     }
@@ -156,13 +198,13 @@ const { item } = route.params || {};
             searchContent={searchContent}
             restaurantData={restaurantData}
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            setSelectedCategory={handleCategorySelect}
           />
         </View>
       )}
 
       <FlatList
-        data={restaurantData}
+        data={filteredData}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         contentContainerStyle={styles.listContainer}
@@ -191,13 +233,20 @@ const { item } = route.params || {};
               />
 
               <View style={styles.headerContent}>
-                <Text style={styles.headerTitle}> {item?.heading || "Your Food"}</Text>
+                <Text style={styles.headerTitle}>
+                  {" "}
+                  {item?.heading || "Your Food"}
+                </Text>
                 <View style={styles.headerRating}>
                   <Text>
-                    
-                     <RatingStars rating={item?.rating || 4.5} />
+                    <RatingStars rating={item?.rating || 4.5} />
                   </Text>
-                  <Text style={{ fontWeight: "600" }}>   {item?.rating ? `${item.rating} (${item.reviews}+) `  : "3.8 (300+ ratings)"}</Text>
+                  <Text style={{ fontWeight: "600" }}>
+                    {" "}
+                    {item?.rating
+                      ? `${item.rating} (${item.reviews}+) `
+                      : "3.8 (300+ ratings)"}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -213,12 +262,9 @@ const { item } = route.params || {};
                 marginVertical: 8,
               }}
             >
-              <View style={styles.container1}>
+              <Pressable style={styles.container1}>
                 <TouchableOpacity
-                  style={[
-                    styles.button,
-                    orderType === "delivery" && styles.activeButton,
-                  ]}
+                  style={[styles.button, orderType === "delivery" && styles.activeButton]}
                   onPress={() => setOrderType("delivery")}
                 >
                   <FontAwesome5Icon
@@ -229,10 +275,7 @@ const { item } = route.params || {};
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={[
-                    styles.button,
-                    orderType === "pickup" && styles.activeButton,
-                  ]}
+                  style={[styles.button, orderType === "pickup" && styles.activeButton]}
                   onPress={() => setOrderType("pickup")}
                 >
                   <FontAwesome5Icon
@@ -241,7 +284,7 @@ const { item } = route.params || {};
                     color={orderType === "pickup" ? "#000" : "grey"}
                   />
                 </TouchableOpacity>
-              </View>
+              </Pressable>
 
               <View
                 style={{
@@ -254,8 +297,7 @@ const { item } = route.params || {};
                   Delivery 20-45 min
                 </Text>
                 <Text style={{ color: "grey" }}>
-                  Rs 129.00 delivery or Rs 109.00 with Savour ' Min order Rs
-                  249.00
+                  Rs 129.00 delivery or Rs 109.00 with Savour ' Min order Rs 249.00
                 </Text>
                 <Text
                   style={{
@@ -303,7 +345,7 @@ const { item } = route.params || {};
                 searchContent={searchContent}
                 restaurantData={restaurantData}
                 selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
+                setSelectedCategory={handleCategorySelect}
               />
             )}
 
@@ -313,11 +355,7 @@ const { item } = route.params || {};
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
             <View style={styles.imageWrapper}>
-              <Image
-                source={item.image}
-                style={styles.image}
-                resizeMode="cover"
-              />
+              <Image source={item.image} style={styles.image} resizeMode="cover" />
               <TouchableOpacity style={styles.addButton} onPress={() => {}}>
                 <FontAwesome5Icon name="plus" size={14} color="#070707ff" />
               </TouchableOpacity>
